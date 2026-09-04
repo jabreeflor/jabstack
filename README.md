@@ -71,8 +71,10 @@ git clone https://github.com/jabreeflor/jabstack.git
 | Skill | What it does |
 |---|---|
 | [`gauntlet-loop`](skills/gauntlet-loop/SKILL.md) | Turns a short topic into a reference-grade build: benchmarked against a real shipped product, subagent fan-out across every quality domain, a per-domain loop with an independent harsh critic, and blind A/B judging until every critic picks our version. |
+| [`create-pr-artifact`](skills/create-pr-artifact/SKILL.md) | Builds a visual explainer artifact for a PR (how the change works, what to look at, how to verify), screenshots it, and attaches both the screenshots and the artifact link to the PR summary with `gh pr edit --attach`. |
 
-Run it as `/gauntlet-loop <topic>`, or just ask to "gauntlet" something.
+Run them as `/gauntlet-loop <topic>` or `/create-pr-artifact [PR]`, or just ask to "gauntlet"
+something / "add an artifact to the PR".
 
 ## Layout
 
@@ -80,7 +82,8 @@ Run it as `/gauntlet-loop <topic>`, or just ask to "gauntlet" something.
 jabstack/
 ├── plugin.json    # manifest (Agent Plugins 1.0.0)
 ├── skills/        # the portable core — one directory per skill
-│   └── gauntlet-loop/SKILL.md
+│   ├── gauntlet-loop/SKILL.md
+│   └── create-pr-artifact/SKILL.md
 └── agents/        # Claude Code only
     └── gauntlet-critic.md
 ```
