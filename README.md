@@ -57,10 +57,39 @@ npx skills update               # pull the latest versions
 npx skills remove gauntlet-loop # uninstall
 ```
 
+### As a Claude Code plugin (skills + the agent, per project)
+
+The repo is also its own single-plugin Claude Code marketplace
+(`.claude-plugin/marketplace.json`). To install it interactively:
+
+```
+/plugin marketplace add jabreeflor/jabstack
+/plugin install jabstack@jabstack
+```
+
+To pin it to a project so every contributor and every Claude Code session gets it, put this in
+the project's `.claude/settings.json` (this is what [jabot](https://github.com/jabreeflor/jabot)
+does):
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "jabstack": {
+      "source": { "source": "github", "repo": "jabreeflor/jabstack" }
+    }
+  },
+  "enabledPlugins": {
+    "jabstack@jabstack": true
+  }
+}
+```
+
+Claude Code prompts to install the plugin on the next session start. Unlike `npx skills`,
+this route ships the `gauntlet-critic` subagent too.
+
 ### Or clone the whole plugin
 
-`npx skills` installs **skills only**. To also get the `gauntlet-critic` subagent, take the
-whole repo and point your agent client at the directory:
+To point any other agent client at the directory:
 
 ```bash
 git clone https://github.com/jabreeflor/jabstack.git
@@ -80,13 +109,19 @@ something / "add an artifact to the PR".
 
 ```
 jabstack/
-├── plugin.json    # manifest (Agent Plugins 1.0.0)
-├── skills/        # the portable core — one directory per skill
+├── plugin.json            # manifest (Agent Plugins 1.0.0)
+├── .claude-plugin/
+│   ├── plugin.json        # the same manifest, where Claude Code looks for it
+│   └── marketplace.json   # makes this repo installable via /plugin or settings.json
+├── skills/                # the portable core — one directory per skill
 │   ├── gauntlet-loop/SKILL.md
 │   └── create-pr-artifact/SKILL.md
-└── agents/        # Claude Code only
+└── agents/                # Claude Code only
     └── gauntlet-critic.md
 ```
+
+Keep `plugin.json` and `.claude-plugin/plugin.json` in sync — the root one is the
+Agent Plugins spec location, the nested one is the Claude Code location.
 
 Agent Plugins v1 defines only **skills** and **MCP servers** as portable —
 commands, hooks, and agents are [out of scope](https://agent-plugins.org/specification).
