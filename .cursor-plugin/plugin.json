@@ -1,8 +1,8 @@
 {
-  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "jabstack",
+  "displayName": "Jabstack",
   "version": "0.3.0",
-  "description": "Jabree's personal agent plugin — a portable stack of skills for Claude Code, Cursor, and other agent clients.",
+  "description": "Jabree's personal agent plugin — gauntlet-loop, create-pr-artifact, and the gauntlet-critic subagent.",
   "author": {
     "name": "Jabree Flor",
     "url": "https://github.com/jabreeflor"
@@ -11,12 +11,13 @@
   "repository": "https://github.com/jabreeflor/jabstack",
   "license": "MIT",
   "keywords": [
-    "agent-plugin",
     "skills",
-    "claude-code",
     "cursor",
     "jabstack",
     "gauntlet",
+    "pr-artifact",
     "quality"
-  ]
+  ],
+  "skills": "./skills/",
+  "agents": "./agents/"
 }

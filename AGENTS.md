@@ -1,16 +1,19 @@
 # Jabstack maintenance
 
-Jabstack is one plugin distributed for ChatGPT Work, Codex, Claude Code, and
-Agent Plugins clients. Keep all formats in sync in the same change.
+Jabstack is one plugin distributed for ChatGPT Work, Codex, Claude Code, Cursor,
+and Agent Plugins clients. Keep all formats in sync in the same change.
 
 - Keep the plugin name and release version identical in `plugin.json`,
-  `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, and the Jabstack
-  entry in `.claude-plugin/marketplace.json`. The marketplace's own
-  `metadata.version` is separate from the plugin release version.
+  `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`,
+  `.cursor-plugin/plugin.json`, and the Jabstack entry in
+  `.claude-plugin/marketplace.json`. The marketplace's own `metadata.version`
+  is separate from the plugin release version.
 - Keep shared metadata and descriptions consistent with the same capabilities.
   Preserve format-specific fields: the root manifest's schema, OpenAI's
-  `skills` and `interface` fields, and Claude's marketplace configuration.
-  Do not blindly copy a manifest into a different format.
+  `skills` and `interface` fields, Claude's marketplace configuration, and
+  Cursor's `displayName`, `skills`, and `agents` paths. Do not blindly copy a
+  manifest into a different format. This repo is a single Cursor plugin, so do
+  not add `.cursor-plugin/marketplace.json`.
 - Treat `skills/` as the single source for skill instructions across all clients.
   Update client fallbacks and referenced `agents/` instructions together when
   behavior changes. Do not maintain divergent per-client copies of a skill.

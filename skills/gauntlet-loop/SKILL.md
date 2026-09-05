@@ -9,7 +9,7 @@ metadata:
 ---
 # Gauntlet Loop
 
-Requirements: Requires a client with subagents, web access, and build tools, such as ChatGPT Work, Codex, or Claude Code.
+Requirements: Requires a client with subagents, web access, and build tools, such as ChatGPT Work, Codex, Claude Code, or Cursor.
 
 Topic: `$ARGUMENTS`
 

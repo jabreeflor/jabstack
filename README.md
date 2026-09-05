@@ -4,7 +4,7 @@
 
 <p align="center">
   A portable <a href="https://agent-plugins.org/">Agent Plugin</a> — reusable Agent Skills that work in
-  ChatGPT Work, Codex, Claude Code, and other compatible agent clients.
+  ChatGPT Work, Codex, Claude Code, Cursor, and other compatible agent clients.
 </p>
 
 ---
@@ -74,6 +74,30 @@ access, screenshot tools, hosting, and authenticated GitHub write access to comp
 publication. The skills use available host tools and report unavailable steps.
 The archive is an export for local installation, not a published directory listing.
 
+### As a Cursor plugin (skills + the agent)
+
+The Cursor manifest lives at `.cursor-plugin/plugin.json`. Cursor discovers both
+skills from `./skills/` and the `gauntlet-critic` agent from `./agents/`. This
+follows the [Cursor plugin format](https://cursor.com/docs/reference/plugins).
+The root `plugin.json` still loads as an Agent Plugin (skills only); the Cursor
+manifest is what ships the subagent too.
+
+**Local install.** Copy or symlink this repository into Cursor's local plugins
+folder, then reload:
+
+```bash
+ln -s /path/to/jabstack ~/.cursor/plugins/local/jabstack
+```
+
+Restart Cursor or run **Developer: Reload Window**. Open **Customize** and
+confirm `gauntlet-loop`, `create-pr-artifact`, and `gauntlet-critic` loaded.
+Try “Run the gauntlet on my project” or “Create a visual explainer for my pull
+request,” or invoke `/gauntlet-loop` and `/create-pr-artifact`.
+
+To share it with a team, import this GitHub repository as a team marketplace
+from Dashboard → Plugins. To submit it to the Cursor Marketplace, use
+[cursor.com/marketplace/publish](https://cursor.com/marketplace/publish).
+
 ### As a Claude Code plugin (skills + the agent, per project)
 
 The repo is also its own single-plugin Claude Code marketplace
@@ -132,16 +156,18 @@ jabstack/
 ├── .claude-plugin/
 │   ├── plugin.json        # the same manifest, where Claude Code looks for it
 │   └── marketplace.json   # makes this repo installable via /plugin or settings.json
+├── .cursor-plugin/
+│   └── plugin.json        # Cursor plugin manifest (skills + gauntlet-critic)
 ├── skills/                # the portable core — one directory per skill
 │   ├── gauntlet-loop/SKILL.md
 │   └── create-pr-artifact/SKILL.md
 ├── AGENTS.md              # shared plugin maintenance and version sync policy
 ├── CLAUDE.md              # imports the shared maintenance policy
-└── agents/                # native Claude agent; reference instructions elsewhere
+└── agents/                # Claude Code and Cursor agent; reference instructions elsewhere
     └── gauntlet-critic.md
 ```
 
-Keep all three manifests and the Claude marketplace's plugin entry on the same
+Keep all four manifests and the Claude marketplace's plugin entry on the same
 plugin name and release version. Shared skills, capability descriptions, and
 supplied exports must stay in sync, while each manifest retains its format-specific
 fields. See [AGENTS.md](AGENTS.md) for the shared maintenance policy;
@@ -149,9 +175,9 @@ fields. See [AGENTS.md](AGENTS.md) for the shared maintenance policy;
 
 Agent Plugins v1 defines only **skills** and **MCP servers** as portable —
 commands, hooks, and agents are [out of scope](https://agent-plugins.org/specification).
-So `gauntlet-critic` ships in Claude Code's native `agents/` location. Clients that don't
-read `agents/` just ignore it, and `gauntlet-loop` still works — it falls back to a generic
-critic subagent instead of the tuned one.
+So `gauntlet-critic` ships in the native `agents/` location for Claude Code and Cursor.
+Clients that don't read `agents/` just ignore it, and `gauntlet-loop` still works —
+it falls back to a generic critic subagent instead of the tuned one.
 
 ## Adding a skill
 
