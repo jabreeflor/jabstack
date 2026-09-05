@@ -1,8 +1,7 @@
 ---
 name: create-pr-artifact
-description: Build an explainer artifact for a pull request (how the change works, with diagrams and screenshots), publish it, and attach it to the PR with the GitHub CLI so the PR summary carries both the screenshots and the artifact link. Use when the user types /create-pr-artifact [PR number or branch], or asks to "add an artifact to the PR", "explain this PR visually", or "attach screenshots to the PR".
+description: Build a standalone HTML walkthrough for a pull request, capture screenshots of the rendered document, and add them to the PR body only with a working walkthrough link. Works across agent harnesses using available browser, hosting, and GitHub tools. Use when the user types /create-pr-artifact [PR number or branch], or asks to "add an artifact to the PR", "explain this PR visually", or "attach screenshots to the PR".
 license: MIT
-compatibility: Designed for Claude Code with the Artifact tool and the GitHub CLI v2.99.0+ (`--attach` support), authenticated with push access to the repo.
 metadata:
   argument-hint: "[PR number | branch] — defaults to the PR for the current branch"
   author: jabreeflor
@@ -10,10 +9,20 @@ metadata:
 ---
 # Create PR Artifact
 
+Requirements: Repository access, HTML file creation, and a browser or screenshot tool. Posting also requires a shareable walkthrough URL, image upload support, and authenticated GitHub write access. Use the capabilities available in the current harness, including Codex, ChatGPT Work, or Claude Code. No proprietary artifact runtime or tool is required; the optional CLI attachment route requires `gh pr edit --attach` support.
+
 Target: `$ARGUMENTS` (empty = the PR for the current branch).
 
-Produce one artifact that explains **how the change works**, then put its screenshots and
-link into the PR body. Do it in this order; don't skip the screenshot step.
+On clients that do not substitute `$ARGUMENTS`, use the PR from the user's request.
+Check available tools before starting. Use a connected GitHub tool when shell or `gh`
+is unavailable. Read the same PR metadata and diff and preserve the existing body.
+If GitHub access is missing, prepare the explainer from any supplied diff and report
+that posting it is blocked; do not claim the PR was updated.
+
+Produce one standalone HTML document that explains **how the change works**, then put
+screenshots of that rendered HTML and its link into the PR body. Include the walkthrough
+section only when a working link is available to reviewers; no link means no walkthrough
+section in the PR. Do not skip the screenshot step.
 
 ## 1. Resolve the PR
 
@@ -25,10 +34,13 @@ gh pr diff $ARGUMENTS
 Read the diff and the touched files. You are explaining the mechanism, not the diff — what
 the reader needs to know to understand or review the change.
 
-## 2. Build the artifact
+## 2. Build the HTML walkthrough
 
-Load the `artifact-design` skill (and `artifact-diagramming` if a diagram earns its place).
-Write a single HTML page to the scratchpad with:
+Write a standalone `walkthrough.html` file in a temporary output directory. Use standard
+HTML and CSS, with browser JavaScript only when useful. Embed styles and diagrams so the
+document opens in a normal browser without a harness-specific viewer, runtime, or build
+step. Available design tools may help author it, but the deliverable is the HTML file.
+Include:
 
 - **Title** = the PR title. One-line summary at the top: what changed and why.
 - **How it works**: the flow before vs after, one diagram if there's a sequence or data
@@ -36,33 +48,51 @@ Write a single HTML page to the scratchpad with:
 - **What to look at**: the 2–5 files that matter, each with one sentence.
 - **How to verify**: exact commands or clicks.
 
-Publish it with the Artifact tool. Keep the artifact URL.
+Publish the HTML using an available hosting or file-sharing capability that gives
+reviewers a durable HTTP(S) link to the walkthrough. Open the link and verify that it
+serves the intended document and is accessible to the intended reviewers. Keep that URL.
+A local path, localhost URL, harness-only preview, or placeholder is not a shareable link.
+If publishing is unavailable, still render the local HTML and capture its screenshots.
+Return those as local deliverables and explain that no walkthrough section was posted
+because a shareable link is missing. Do not add a linkless section or a publishing-status
+placeholder to the PR body.
 
 ## 3. Screenshot it
 
-Render the published page with Playwright (Chromium is preinstalled) and capture one
-full-page shot plus one per major section, into the scratchpad:
+Render the HTML document at its published URL (or locally when publishing is unavailable)
+with an available browser screenshot tool, or Playwright after checking that Playwright
+and Chromium are installed. Screenshot the rendered walkthrough itself, not the harness
+interface or HTML source. Inspect the captures for readable text and complete diagrams.
+Capture one full-page shot plus one per major section into the temporary output directory.
+For example, with `WALKTHROUGH_URL` set to the published or local preview URL:
 
 ```bash
 node -e '
 const {chromium}=require("playwright");(async()=>{
 const b=await chromium.launch();const p=await b.newPage({viewport:{width:1280,height:800}});
 await p.goto(process.argv[1],{waitUntil:"networkidle"});
-await p.screenshot({path:"artifact-full.png",fullPage:true});await b.close();})()' "$ARTIFACT_URL"
+await p.screenshot({path:"artifact-full.png",fullPage:true});await b.close();})()' "$WALKTHROUGH_URL"
 ```
 
-Do **not** commit the screenshots. `gh` uploads them in the next step.
+Do **not** commit the screenshots. Upload them when attaching the walkthrough below.
 
 ## 4. Attach to the PR
 
-Requires `gh` **v2.99.0+** (`gh --version`; upgrade if older). Rewrite the PR body so the
-summary section carries the artifact. Preserve everything already there; append (or replace
-a previous `## Artifact` section) with:
+Proceed only with a verified walkthrough URL and screenshots ready to upload. Without
+a working walkthrough link, omit the section; remove an existing section only if it is
+a linkless walkthrough previously generated by this skill. Preserve unrelated PR content.
+
+Check `gh pr edit --help` for `--attach` support before using the CLI route below.
+If unavailable, use a connected tool that supports image upload and PR editing. If
+neither route can upload images, return the prepared files and body and explain the
+missing capability. Do not claim local image paths will render on GitHub.
+Preserve the existing PR body and append or update this skill's `## Walkthrough` section
+(also recognizing its previous `## Artifact` heading) with:
 
 ```markdown
-## Artifact
+## Walkthrough
 
-📎 **[How this works — interactive explainer](<artifact-url>)**
+**[How this works — HTML walkthrough](<walkthrough-url>)**
 
 ![Overview](./artifact-full.png)
 
@@ -86,9 +116,13 @@ gh pr edit <n> --body-file body.md \
 The `#text` suffix after a path is the alt text. Same flag works on `gh pr create` and
 `gh pr comment` if the PR doesn't exist yet or you'd rather leave the body alone.
 
-Confirm the upload happened:
-`gh pr view <n> --json body -q .body | grep -c 'github.com/user-attachments'`.
+Read the saved PR body back and verify that the walkthrough link is present and each
+screenshot reference uses a hosted image URL. Open the PR to confirm the images render.
+Do not report success if local paths or placeholders remain.
 
 ## Report
 
-Three lines: the artifact link, the PR link, and how many screenshots were attached.
+Report the walkthrough link, the PR link, and how many screenshots were attached.
+If publication or attachment was unavailable, link the local HTML and screenshot files
+in your response and state what is missing and whether the PR was changed. Do not put
+that fallback report in a walkthrough section of the PR.

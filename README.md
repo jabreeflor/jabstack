@@ -4,7 +4,7 @@
 
 <p align="center">
   A portable <a href="https://agent-plugins.org/">Agent Plugin</a> — reusable Agent Skills that work in
-  Claude Code and any other client that speaks the Agent Plugins spec.
+  ChatGPT Work, Codex, Claude Code, and other compatible agent clients.
 </p>
 
 ---
@@ -57,6 +57,23 @@ npx skills update               # pull the latest versions
 npx skills remove gauntlet-loop # uninstall
 ```
 
+### As a ChatGPT Work or Codex plugin
+
+The OpenAI manifest lives at `.codex-plugin/plugin.json` and loads both skills from
+`./skills/`. This follows the [OpenAI plugin format](https://learn.chatgpt.com/docs/build-plugins).
+
+Use this repository's `jabstack/` folder, or extract a supplied plugin ZIP.
+In ChatGPT Work, ask `@plugin-creator` to add that folder to your
+local marketplace; in Codex, use `$plugin-creator`. Install Jabstack from the
+Plugins Directory, then start a new conversation with it enabled. See OpenAI's
+[installation and testing guide](https://developers.openai.com/plugins/deploy/connect-chatgpt).
+
+Try “Run the gauntlet on my project” or “Create a visual explainer for my pull request.”
+Gauntlet needs independent subagents and web access. PR artifacts need repository
+access, screenshot tools, hosting, and authenticated GitHub write access to complete
+publication. The skills use available host tools and report unavailable steps.
+The archive is an export for local installation, not a published directory listing.
+
 ### As a Claude Code plugin (skills + the agent, per project)
 
 The repo is also its own single-plugin Claude Code marketplace
@@ -100,7 +117,7 @@ git clone https://github.com/jabreeflor/jabstack.git
 | Skill | What it does |
 |---|---|
 | [`gauntlet-loop`](skills/gauntlet-loop/SKILL.md) | Turns a short topic into a reference-grade build: benchmarked against a real shipped product, subagent fan-out across every quality domain, a per-domain loop with an independent harsh critic, and blind A/B judging until every critic picks our version. |
-| [`create-pr-artifact`](skills/create-pr-artifact/SKILL.md) | Builds a visual explainer artifact for a PR (how the change works, what to look at, how to verify), screenshots it, and attaches both the screenshots and the artifact link to the PR summary with `gh pr edit --attach`. |
+| [`create-pr-artifact`](skills/create-pr-artifact/SKILL.md) | Creates a standalone HTML PR walkthrough in any agent harness, screenshots the rendered document, and adds the screenshots to the PR body only with a working walkthrough link. Uses available hosting and GitHub upload tools. |
 
 Run them as `/gauntlet-loop <topic>` or `/create-pr-artifact [PR]`, or just ask to "gauntlet"
 something / "add an artifact to the PR".
@@ -110,18 +127,25 @@ something / "add an artifact to the PR".
 ```
 jabstack/
 ├── plugin.json            # manifest (Agent Plugins 1.0.0)
+├── .codex-plugin/
+│   └── plugin.json        # ChatGPT Work and Codex manifest
 ├── .claude-plugin/
 │   ├── plugin.json        # the same manifest, where Claude Code looks for it
 │   └── marketplace.json   # makes this repo installable via /plugin or settings.json
 ├── skills/                # the portable core — one directory per skill
 │   ├── gauntlet-loop/SKILL.md
 │   └── create-pr-artifact/SKILL.md
-└── agents/                # Claude Code only
+├── AGENTS.md              # shared plugin maintenance and version sync policy
+├── CLAUDE.md              # imports the shared maintenance policy
+└── agents/                # native Claude agent; reference instructions elsewhere
     └── gauntlet-critic.md
 ```
 
-Keep `plugin.json` and `.claude-plugin/plugin.json` in sync — the root one is the
-Agent Plugins spec location, the nested one is the Claude Code location.
+Keep all three manifests and the Claude marketplace's plugin entry on the same
+plugin name and release version. Shared skills, capability descriptions, and
+supplied exports must stay in sync, while each manifest retains its format-specific
+fields. See [AGENTS.md](AGENTS.md) for the shared maintenance policy;
+[CLAUDE.md](CLAUDE.md) imports the same policy.
 
 Agent Plugins v1 defines only **skills** and **MCP servers** as portable —
 commands, hooks, and agents are [out of scope](https://agent-plugins.org/specification).

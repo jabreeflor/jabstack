@@ -1,8 +1,7 @@
 ---
 name: gauntlet-loop
-description: Turn a short topic into a full "gauntlet" build — benchmarked against a real shipped product, subagent fan-out over every quality domain, a per-domain loop with an independent harsh critic, and blind side-by-side judging until every critic picks our version. Use when the user types /gauntlet-loop <topic>, or asks to "gauntlet" / "run the gauntlet on" something.
+description: Turn a short topic into a full "gauntlet" build — benchmarked against a real shipped product, subagent fan-out over every quality domain, a per-domain loop with an independent harsh critic, and blind side-by-side judging until every critic picks our version. Use when the user types /gauntlet-loop followed by a topic, or asks to "gauntlet" / "run the gauntlet on" something.
 license: MIT
-compatibility: Designed for Claude Code (or a client that supports subagent fan-out and web access).
 metadata:
   argument-hint: <topic to build at reference-grade quality>
   author: jabreeflor
@@ -10,7 +9,16 @@ metadata:
 ---
 # Gauntlet Loop
 
+Requirements: Requires a client with subagents, web access, and build tools, such as ChatGPT Work, Codex, or Claude Code.
+
 Topic: `$ARGUMENTS`
+
+On clients that do not substitute `$ARGUMENTS`, use the topic from the user's request.
+Use the client's available subagent tools. If the named `gauntlet-critic` agent is
+unavailable, give a generic critic subagent the judging instructions from
+`../../agents/gauntlet-critic.md`; its Claude-specific frontmatter does not apply.
+If independent subagents or reference access are unavailable, explain the missing
+capability and report any review as a self-review, never as an independent blind test.
 
 Expand the topic into this prompt, then execute it:
 
