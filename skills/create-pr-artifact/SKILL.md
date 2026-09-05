@@ -9,7 +9,7 @@ metadata:
 ---
 # Create PR Artifact
 
-Requirements: Repository access, HTML file creation, and a browser or screenshot tool. Posting also requires a shareable walkthrough URL, image upload support, and authenticated GitHub write access. Use the capabilities available in the current harness, including Codex, ChatGPT Work, or Claude Code. No proprietary artifact runtime or tool is required; the optional CLI attachment route requires `gh pr edit --attach` support.
+Requirements: Repository access, HTML file creation, and a browser or screenshot tool. Posting also requires a shareable walkthrough URL, image upload support, and authenticated GitHub write access. Use the capabilities available in the current harness, including Codex, ChatGPT Work, Claude Code, or Cursor. No proprietary artifact runtime or tool is required; the optional CLI attachment route requires `gh pr edit --attach` support.
 
 Target: `$ARGUMENTS` (empty = the PR for the current branch).
 
