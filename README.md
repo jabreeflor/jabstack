@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/chopper.svg" alt="Chopper" width="240">
+  <img src="assets/chopper.svg" alt="Chopper" width="260">
 </p>
 
 # jabstack
