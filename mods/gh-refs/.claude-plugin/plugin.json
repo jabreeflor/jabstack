@@ -1,7 +1,7 @@
 {
   "name": "gh-refs",
   "version": "0.1.0",
-  "description": "A #github picker for Claude Code: type #github (or run /github) to pick one of the repo's issues or PRs, and its details are sent as the prompt.",
+  "description": "A #github picker for Claude Code: type #github (or run /github) to pick one of the repo's issues or PRs, and its details land in the prompt, ready to edit.",
   "author": {
     "name": "Jabree Flor",
     "url": "https://github.com/jabreeflor"

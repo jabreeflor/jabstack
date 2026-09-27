@@ -155,7 +155,7 @@ jabstack plugin, so other clients never see it.
 
 | Mod | What it does |
 |---|---|
-| [`gh-refs`](mods/gh-refs/README.md) | Type `#github` (or run `/github`) to pick one of the repo's issues or PRs; its title, state, description and comments are sent as the prompt. |
+| [`gh-refs`](mods/gh-refs/README.md) | Type `#github` (or run `/github`) to pick one of the repo's issues or PRs; its title, state, description and comments land in the prompt, ready to edit before sending. |
 
 Mods are early access: set `CLAUDE_CODE_ENABLE_FUNCTION_HOOKS=1`, then
 `/plugin install gh-refs@jabstack`.

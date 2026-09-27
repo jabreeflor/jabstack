@@ -7,8 +7,8 @@ GitHub issue or PR into the conversation without leaving the prompt.
   repo's issues and PRs, the filter already focused.
 - Type to filter by title or number. **Tab** or **↑/↓** moves, **Enter** picks,
   **Esc** cancels and puts your draft back.
-- The pick is sent as the prompt: whatever you typed before `#github`, then the item's
-  title, state, author, link, description and comments.
+- The pick lands in the prompt box, ready to edit before you send it: whatever you typed
+  before `#github`, then the item's title, state, author, link, description and comments.
 - `/github [filter]` opens the same picker.
 
 Needs the [GitHub CLI](https://cli.github.com) (`gh`) signed in, and a working directory

@@ -36,9 +36,10 @@ const TRIGGER = /(?:^|\s)#github$/
  * A `#github` picker for the repo's issues and PRs.
  *
  * Typing `#github` sets the draft aside and opens a focused picker: type to
- * filter, Tab or the arrows to move, Enter to pick. The pick is sent as the
- * prompt, the draft before `#github` first, then the item's title, state,
- * body and comments. Escape closes it and puts the draft back.
+ * filter, Tab or the arrows to move, Enter to pick. The pick lands in the
+ * prompt box, the draft before `#github` first, then the item's title, state,
+ * body and comments, to edit before sending. Escape closes it and puts the
+ * draft back.
  *
  * @param on the engine's registrar
  */
@@ -71,7 +72,7 @@ export function register(on: On) {
 
     await $.command.register({
       name: 'github',
-      description: 'Pick a GitHub issue or PR and send its details as the prompt',
+      description: 'Pick a GitHub issue or PR and put its details in the prompt',
       argumentHint: '[filter]',
     })
     await refresh().catch(() => undefined)
@@ -146,7 +147,7 @@ export function register(on: On) {
           label: '#github ',
           placeholder: 'filter by title or number',
           value: state.filter,
-          submitLabel: 'pull top match',
+          submitLabel: 'insert top match',
           autoFocus: true,
           onInput: value => {
             state.filter = value
@@ -213,7 +214,8 @@ async function openPicker($: Engine, state: Picker, isFromTyping: boolean) {
 }
 
 /**
- * Closes the picker and sends the pick as the prompt, after the saved draft.
+ * Closes the picker and puts the pick in the prompt box, after the saved
+ * draft, for the person to edit and send.
  */
 async function pick($: Engine, state: Picker, ref: Ref | undefined) {
   if (!ref || !state.isPicking) {
@@ -225,7 +227,7 @@ async function pick($: Engine, state: Picker, ref: Ref | undefined) {
 
   const details = await detailsOf($, ref)
 
-  await $.prompt.submit({
+  await $.prompt.fill({
     text: state.draft ? `${state.draft}\n\n${details}` : details,
   })
 }

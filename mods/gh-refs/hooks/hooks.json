@@ -1,5 +1,5 @@
 {
-  "description": "#github picker: a focused list of the repo issues and PRs; the pick is sent as the prompt with its details",
+  "description": "#github picker: a focused list of the repo issues and PRs; the pick's details land in the prompt to edit",
   "modules": [
     "./register.ts"
   ]

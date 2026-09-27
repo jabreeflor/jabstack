@@ -20,7 +20,7 @@
     {
       "name": "gh-refs",
       "source": "./mods/gh-refs",
-      "description": "A #github picker: pick one of the repo's issues or PRs and its details are sent as the prompt. Claude Code mod (early access).",
+      "description": "A #github picker: pick one of the repo's issues or PRs and its details land in the prompt, ready to edit. Claude Code mod (early access).",
       "version": "0.1.0",
       "category": "productivity",
       "keywords": ["mod", "github", "issues", "pull-requests"]
