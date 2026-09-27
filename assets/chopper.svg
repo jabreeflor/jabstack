@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 440" width="320" height="352" role="img" aria-label="Tony Tony Chopper">
+  <title>Chopper</title>
+  <!-- antlers -->
+  <g fill="none" stroke="#B07A45" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M118 170 L62 104 M88 135 L42 140 M74 118 L82 70"/>
+    <path d="M282 170 L338 104 M312 135 L358 140 M326 118 L318 70"/>
+  </g>
+  <!-- ears -->
+  <ellipse cx="92" cy="208" rx="30" ry="16" fill="#8B5A2B" transform="rotate(-25 92 208)"/>
+  <ellipse cx="308" cy="208" rx="30" ry="16" fill="#8B5A2B" transform="rotate(25 308 208)"/>
+  <ellipse cx="94" cy="208" rx="18" ry="8" fill="#E9B98A" transform="rotate(-25 94 208)"/>
+  <ellipse cx="306" cy="208" rx="18" ry="8" fill="#E9B98A" transform="rotate(25 306 208)"/>
+  <!-- body -->
+  <path d="M168 392 v26 a12 10 0 0 0 24 0 v-26 z M208 392 v26 a12 10 0 0 0 24 0 v-26 z" fill="#8B5A2B"/>
+  <rect x="168" y="412" width="24" height="12" rx="5" fill="#3A2414"/>
+  <rect x="208" y="412" width="24" height="12" rx="5" fill="#3A2414"/>
+  <ellipse cx="200" cy="350" rx="58" ry="48" fill="#8B5A2B"/>
+  <path d="M146 362 Q200 382 254 362 L250 398 Q200 408 150 398 Z" fill="#5B5FC7"/>
+  <ellipse cx="138" cy="345" rx="16" ry="26" fill="#8B5A2B" transform="rotate(25 138 345)"/>
+  <ellipse cx="262" cy="345" rx="16" ry="26" fill="#8B5A2B" transform="rotate(-25 262 345)"/>
+  <ellipse cx="129" cy="366" rx="11" ry="8" fill="#3A2414"/>
+  <ellipse cx="271" cy="366" rx="11" ry="8" fill="#3A2414"/>
+  <!-- head -->
+  <ellipse cx="200" cy="240" rx="108" ry="92" fill="#8B5A2B"/>
+  <ellipse cx="200" cy="262" rx="80" ry="62" fill="#A8703A"/>
+  <!-- eyes -->
+  <ellipse cx="158" cy="242" rx="20" ry="24" fill="#1B1B1B"/>
+  <ellipse cx="242" cy="242" rx="20" ry="24" fill="#1B1B1B"/>
+  <circle cx="165" cy="233" r="8" fill="#fff"/>
+  <circle cx="249" cy="233" r="8" fill="#fff"/>
+  <circle cx="152" cy="252" r="3.5" fill="#fff"/>
+  <circle cx="236" cy="252" r="3.5" fill="#fff"/>
+  <!-- blush -->
+  <ellipse cx="128" cy="280" rx="16" ry="8" fill="#F28DA8" opacity="0.7"/>
+  <ellipse cx="272" cy="280" rx="16" ry="8" fill="#F28DA8" opacity="0.7"/>
+  <!-- nose + mouth -->
+  <ellipse cx="200" cy="276" rx="15" ry="11" fill="#3B82F6"/>
+  <ellipse cx="195" cy="272" rx="5" ry="3" fill="#BFDBFE"/>
+  <path d="M184 296 Q200 312 216 296" fill="#7A2E2E" stroke="#3A2414" stroke-width="3" stroke-linecap="round"/>
+  <!-- hat -->
+  <path d="M122 168 C118 120 124 78 130 58 L270 58 C276 78 282 120 278 168 Z" fill="#EF6F9C"/>
+  <ellipse cx="200" cy="58" rx="70" ry="16" fill="#F58CB2"/>
+  <path d="M123 150 Q200 164 277 150 L278 168 Q200 182 122 168 Z" fill="#3B6FD8"/>
+  <ellipse cx="200" cy="172" rx="130" ry="26" fill="#E35B8C"/>
+  <ellipse cx="200" cy="166" rx="112" ry="16" fill="#EF6F9C"/>
+  <g transform="translate(200 104) rotate(45)" fill="#fff">
+    <rect x="-8" y="-30" width="16" height="60" rx="3"/>
+    <rect x="-30" y="-8" width="60" height="16" rx="3"/>
+  </g>
+</svg>
