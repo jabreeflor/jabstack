@@ -1,0 +1,6 @@
+{
+  "description": "#github picker: a focused list of the repo issues and PRs; the pick's details land in the prompt to edit",
+  "modules": [
+    "./register.ts"
+  ]
+}

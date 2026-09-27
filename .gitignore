@@ -3,3 +3,7 @@ node_modules/
 *.log
 dist/
 __pycache__/
+
+# Claude Code writes these into a mod when it loads it (editor typings)
+mods/*/tsconfig.json
+mods/*/.claude-plugin/types/

@@ -146,6 +146,20 @@ git clone https://github.com/jabreeflor/jabstack.git
 Run them as `/gauntlet-loop <topic>` or `/create-pr-artifact [PR]`, or just ask to "gauntlet"
 something / "add an artifact to the PR".
 
+## Mods
+
+Claude Code only. A [mod](https://github.com/anthropics/claude-code/tree/main/mods) is a
+Claude Code plugin whose hooks are TypeScript running inside Claude Code itself. Each one
+lives under `mods/` as its own plugin in this marketplace, separate from the portable
+jabstack plugin, so other clients never see it.
+
+| Mod | What it does |
+|---|---|
+| [`gh-refs`](mods/gh-refs/README.md) | Type `#github` (or run `/github`) to pick one of the repo's issues or PRs; its title, state, description and comments land in the prompt, ready to edit before sending. |
+
+Mods are early access: set `CLAUDE_CODE_ENABLE_FUNCTION_HOOKS=1`, then
+`/plugin install gh-refs@jabstack`.
+
 ## Layout
 
 ```
@@ -163,12 +177,15 @@ jabstack/
 │   └── create-pr-artifact/SKILL.md
 ├── AGENTS.md              # shared plugin maintenance and version sync policy
 ├── CLAUDE.md              # imports the shared maintenance policy
-└── agents/                # Claude Code and Cursor agent; reference instructions elsewhere
-    └── gauntlet-critic.md
+├── agents/                # Claude Code and Cursor agent; reference instructions elsewhere
+│   └── gauntlet-critic.md
+└── mods/                  # Claude Code mods, each its own plugin in the marketplace
+    └── gh-refs/           # the #github issue and PR picker
 ```
 
-Keep all four manifests and the Claude marketplace's plugin entry on the same
-plugin name and release version. Shared skills, capability descriptions, and
+Keep all four manifests and the Claude marketplace's jabstack entry on the same
+plugin name and release version. Each mod versions on its own, in its
+`.claude-plugin/plugin.json` and its marketplace entry. Shared skills, capability descriptions, and
 supplied exports must stay in sync, while each manifest retains its format-specific
 fields. See [AGENTS.md](AGENTS.md) for the shared maintenance policy;
 [CLAUDE.md](CLAUDE.md) imports the same policy.

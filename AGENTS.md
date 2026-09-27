@@ -17,6 +17,10 @@ and Agent Plugins clients. Keep all formats in sync in the same change.
 - Treat `skills/` as the single source for skill instructions across all clients.
   Update client fallbacks and referenced `agents/` instructions together when
   behavior changes. Do not maintain divergent per-client copies of a skill.
+- `mods/` holds Claude Code mods, each its own plugin with its own entry and
+  version in `.claude-plugin/marketplace.json`. They are Claude Code only: keep
+  them out of the other manifests and exports, and out of the jabstack release
+  version.
 - Update README installation notes, skill listings, and layout when they change.
 - When making a release or supplying an export, include the same current skills,
   references, and manifests in every distribution. Update any existing local
