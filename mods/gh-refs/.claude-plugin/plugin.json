@@ -1,0 +1,13 @@
+{
+  "name": "gh-refs",
+  "version": "0.1.0",
+  "description": "A #github picker for Claude Code: type #github (or run /github) to pick one of the repo's issues or PRs, and its details are sent as the prompt.",
+  "author": {
+    "name": "Jabree Flor",
+    "url": "https://github.com/jabreeflor"
+  },
+  "homepage": "https://github.com/jabreeflor/jabstack/tree/main/mods/gh-refs",
+  "repository": "https://github.com/jabreeflor/jabstack",
+  "license": "MIT",
+  "keywords": ["mod", "github", "issues", "pull-requests", "claude-code"]
+}

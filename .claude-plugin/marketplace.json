@@ -5,8 +5,8 @@
     "url": "https://github.com/jabreeflor"
   },
   "metadata": {
-    "description": "Single-plugin marketplace for jabstack so it can be enabled from a project's .claude/settings.json.",
-    "version": "1.0.0"
+    "description": "Claude Code marketplace for jabstack, plus gh-refs, a Claude Code mod; either can be enabled from a project's .claude/settings.json.",
+    "version": "1.1.0"
   },
   "plugins": [
     {
@@ -16,6 +16,14 @@
       "version": "0.3.0",
       "category": "productivity",
       "keywords": ["skills", "gauntlet", "pr-artifact"]
+    },
+    {
+      "name": "gh-refs",
+      "source": "./mods/gh-refs",
+      "description": "A #github picker: pick one of the repo's issues or PRs and its details are sent as the prompt. Claude Code mod (early access).",
+      "version": "0.1.0",
+      "category": "productivity",
+      "keywords": ["mod", "github", "issues", "pull-requests"]
     }
   ]
 }
